@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+    <context-param>
+        <param-name>header</param-name>
+        <param-value>
+             Log In and Sign Up Web App
+        </param-value>
+    </context-param>
+    <context-param>
+        <param-name>footer</param-name>
+        <param-value>
+             ReuMonty | Created 2020
+        </param-value>
+    </context-param>
+    <context-param>
+        <param-name>driverClass</param-name>
+        <param-value>org.apache.derby.jdbc.ClientDriver</param-value>
+    </context-param>
+    <context-param>
+        <param-name>driverURL</param-name>
+        <param-value>jdbc:derby</param-value>
+    </context-param>
+    <context-param>
+        <param-name>hostName</param-name>
+        <param-value>localhost</param-value>
+    </context-param>
+    <context-param>
+        <param-name>port</param-name>
+        <param-value>1527</param-value>
+    </context-param>
+    <context-param>
+        <param-name>database</param-name>
+        <param-value>UserDB</param-value>
+    </context-param>
+    <context-param>
+        <param-name>dbUsername</param-name>
+        <param-value>app</param-value>
+    </context-param>
+    <context-param>
+        <param-name>dbPassword</param-name>
+        <param-value>app</param-value>
+    </context-param>
+    <listener>
+        <description>ServletContextListener</description>
+        <listener-class>listener.ContextListener</listener-class>
+    </listener>
+    <servlet>
+        <servlet-name>SignUpServlet</servlet-name>
+        <servlet-class>Controller.SignUpServlet</servlet-class>
+        <init-param>
+            <param-name>queryCheckUname</param-name>
+            <param-value>SELECT * FROM UserDB WHERE USERNAME = ?</param-value>
+        </init-param>
+        <init-param>
+            <param-name>queryAddUser</param-name>
+            <param-value>insert into UserDB (USERNAME, PASSWORD, ROLES) values (?,?,?)</param-value>
+        </init-param>
+    </servlet>
+    <servlet>
+        <servlet-name>LogInServlet</servlet-name>
+        <servlet-class>Controller.LogInServlet</servlet-class>
+        <init-param>
+            <param-name>query</param-name>
+            <param-value>SELECT * FROM UserDB WHERE USERNAME = ?</param-value>
+        </init-param>
+    </servlet>
+    <servlet>
+        <servlet-name>RecordsServlet</servlet-name>
+        <servlet-class>Controller.RecordsServlet</servlet-class>
+        <init-param>
+            <param-name>query</param-name>
+            <param-value>SELECT USERNAME, ROLES FROM UserDB WHERE USERNAME != ?</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SignUpServlet</servlet-name>
+        <url-pattern>/SignUp</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LogInServlet</servlet-name>
+        <url-pattern>/LogIn</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RecordsServlet</servlet-name>
+        <url-pattern>/Records</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+</web-app>
